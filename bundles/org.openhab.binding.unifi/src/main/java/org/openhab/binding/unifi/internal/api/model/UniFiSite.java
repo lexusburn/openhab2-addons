@@ -48,6 +48,22 @@ public class UniFiSite {
         return desc;
     }
 
+    public long getTotalClientCount() {
+        return controller.getTotalClientCount(this);
+    }
+
+    public long getWirelessClientCount() {
+        return controller.getWirelessClientCount(this);
+    }
+
+    public long getWiredClientCount() {
+        return controller.getWiredClientCount(this);
+    }
+
+    public long getGuestClientCount() {
+        return controller.getGuestClientCount(this);
+    }
+
     public boolean matchesName(String siteName) {
         return StringUtils.equalsIgnoreCase(desc, siteName) || StringUtils.equalsIgnoreCase(name, siteName)
                 || StringUtils.equalsIgnoreCase(id, siteName);

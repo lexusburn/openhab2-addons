@@ -24,6 +24,7 @@ import org.eclipse.smarthome.io.net.http.HttpClientFactory;
 import org.eclipse.smarthome.io.net.http.HttpClientInitializationException;
 import org.openhab.binding.unifi.internal.handler.UniFiClientThingHandler;
 import org.openhab.binding.unifi.internal.handler.UniFiControllerThingHandler;
+import org.openhab.binding.unifi.internal.handler.UniFiSiteThingHandler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 
@@ -51,7 +52,8 @@ public class UniFiThingHandlerFactory extends BaseThingHandlerFactory {
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
         return UniFiControllerThingHandler.supportsThingType(thingTypeUID)
-                || UniFiClientThingHandler.supportsThingType(thingTypeUID);
+                || UniFiClientThingHandler.supportsThingType(thingTypeUID)
+                || UniFiSiteThingHandler.supportsThingType(thingTypeUID);
     }
 
     @Override
@@ -61,6 +63,8 @@ public class UniFiThingHandlerFactory extends BaseThingHandlerFactory {
             return new UniFiControllerThingHandler((Bridge) thing, httpClient);
         } else if (UniFiClientThingHandler.supportsThingType(thingTypeUID)) {
             return new UniFiClientThingHandler(thing);
+        } else if (UniFiSiteThingHandler.supportsThingType(thingTypeUID)) {
+            return new UniFiSiteThingHandler(thing);
         }
         return null;
     }

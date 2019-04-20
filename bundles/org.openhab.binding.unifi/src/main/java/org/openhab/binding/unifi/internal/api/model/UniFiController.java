@@ -13,6 +13,7 @@
 package org.openhab.binding.unifi.internal.api.model;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jdt.annotation.NonNullByDefault;
@@ -134,6 +135,42 @@ public class UniFiController {
             }
         }
         return site;
+    }
+
+    private synchronized Stream<UniFiClient> getClientStreamForSite(UniFiSite site) {
+        return clientsCache.values().stream().filter(client -> client.getSite().equals(site));
+    }
+
+    protected long getTotalClientCount(UniFiSite site) {
+        long count = 0;
+        synchronized (this) {
+            count = getClientStreamForSite(site).count();
+        }
+        return count;
+    }
+
+    protected long getWirelessClientCount(UniFiSite site) {
+        long count = 0;
+        synchronized (this) {
+            count = getClientStreamForSite(site).filter(client -> client.isWireless()).count();
+        }
+        return count;
+    }
+
+    protected long getWiredClientCount(UniFiSite site) {
+        long count = 0;
+        synchronized (this) {
+            count = getClientStreamForSite(site).filter(client -> client.isWired()).count();
+        }
+        return count;
+    }
+
+    protected long getGuestClientCount(UniFiSite site) {
+        long count = 0;
+        synchronized (this) {
+            count = getClientStreamForSite(site).filter(client -> client.isGuest()).count();
+        }
+        return count;
     }
 
     // Device API

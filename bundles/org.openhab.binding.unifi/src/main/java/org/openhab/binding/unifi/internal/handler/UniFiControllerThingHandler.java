@@ -158,6 +158,7 @@ public class UniFiControllerThingHandler extends BaseBridgeHandler {
         }
     }
 
+    @SuppressWarnings("null")
     private void cancelRefreshJob() {
         synchronized (this) {
             if (refreshJob != null) {
@@ -184,6 +185,7 @@ public class UniFiControllerThingHandler extends BaseBridgeHandler {
         }
     }
 
+    @SuppressWarnings({ "null", "rawtypes" })
     private void refresh() throws UniFiException {
         if (controller != null) {
             logger.debug("Refreshing the UniFi Controller {}", getThing().getUID());
